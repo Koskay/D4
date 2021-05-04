@@ -22,7 +22,9 @@ urlpatterns = [
     path('', include('p_library.urls')),
     path('index/', views.index),
     #path('', views.books_list),
-    path('index/book_increment/', views.book_increment),
-    path('index/book_decrement/', views.book_decrement),
+    path('friends/book_increment/', views.book_increment),
+    path('index/book_increments/', views.book_increments),
+    path('index/book_decrements/', views.book_decrements),
     path('redactions/', views.redactions),
+    path('friends/', views.friends)
 ]

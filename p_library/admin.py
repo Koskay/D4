@@ -1,5 +1,5 @@
 from django.contrib import admin
-from p_library.models import Author, Book, Redaction
+from p_library.models import Author, Book, Redaction, Friend
 # Register your models here.
 
 @admin.register(Author)
@@ -13,7 +13,7 @@ class BookAdmin(admin.ModelAdmin):
         return obj.author.full_name
 
     list_display = ('title', 'author_full_name',)
-    fields = ('ISBN', 'title', 'description', 'year_release', 'author', 'price', 'copy_count', 'redaction')
+    fields = ('ISBN', 'title', 'description', 'year_release', 'author', 'price', 'copy_count', 'redaction','friends')
 
 
 @admin.register(Redaction)
@@ -21,3 +21,6 @@ class RedactionAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(Friend)
+class FriendAdmin(admin.ModelAdmin):
+    pass

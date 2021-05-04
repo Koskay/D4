@@ -10,6 +10,7 @@ from django.views.generic import CreateView, ListView
 from django.urls import reverse_lazy
 from django.forms import formset_factory
 from django.http.response import HttpResponseRedirect
+from p_library.models import Friend
 
 # Create your views here.
 #def index(request):
@@ -35,6 +36,22 @@ def book_increment(request):
     if request.method == 'POST':
         book_id = request.POST['id']
         if not book_id:
+            return redirect('/friends')
+        else:
+            book = Book.objects.filter(id=book_id).first()
+            if not book:
+                return redirect('/friends')
+            book.copy_count += 1
+            book.save()
+        return redirect('/friends')
+    else:
+        return redirect('/friends')
+
+
+def book_increments(request):
+    if request.method == 'POST':
+        book_id = request.POST['id']
+        if not book_id:
             return redirect('/index')
         else:
             book = Book.objects.filter(id=book_id).first()
@@ -46,8 +63,7 @@ def book_increment(request):
     else:
         return redirect('/index')
 
-
-def book_decrement(request):
+def book_decrements(request):
     if request.method == 'POST':
         book_id = request.POST['id']
         if not book_id:
@@ -123,3 +139,11 @@ def books_authors_create_many(request):
         }
 
     )
+
+def friends(request):
+    template = loader.get_template('friends.html')
+    friends = Friend.objects.all()
+    data = {
+        "friends": friends,
+    }
+    return HttpResponse(template.render(data, request))
