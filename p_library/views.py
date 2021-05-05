@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from p_library.models import Redaction
 from p_library.models import Author
-from p_library.forms import AuthorForm, BookForm
+from p_library.forms import AuthorForm, BookForm, FriendForm
 from django.views.generic import CreateView, ListView
 from django.urls import reverse_lazy
 from django.forms import formset_factory
@@ -147,3 +147,13 @@ def friends(request):
         "friends": friends,
     }
     return HttpResponse(template.render(data, request))
+
+class FriendEdit(CreateView):
+    model = Friend
+    form_class = FriendForm
+    success_url = reverse_lazy('p_library:friend_list')
+    template_name = 'friends_edit.html'
+
+class FriendList(ListView):
+    model = Friend
+    template_name = 'friend_list.html'
