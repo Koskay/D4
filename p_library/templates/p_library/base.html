@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'p_library/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'p_library/stile.css' %}" />
+    <title>Title</title>
+</head>
+<header>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#"></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/">Главная</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/author/create">Добавить Автора</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/redactions/">Список Редакций</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/friend/create">Взять книгу почитать</a>
+        </li>
+    </ul>
+</header>
+<body>
+    <div class="body">
+        <div class="title">
+            {% block title %}{% endblock title %}
+            {% block header %}{% endblock header %}
+        </div>
+        {% block content %}{% endblock content %}
+    </div>
+</body>
+</html>

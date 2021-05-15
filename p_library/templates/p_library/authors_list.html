@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Список авторов</title>
-</head>
-<body>
+{% extends 'p_library/base.html' %}
+{% block content %}
     <ul>
 		{% for author in object_list %}
 		    <li>{{ author.full_name }}</li>
+			<li>
+				<img height="200" width="200"
+                 src="{{ author.photos.url }}" alt="" class="fit">
+			</li>
 		{% endfor %}
 	</ul>
-</body>
-</html>
+{% endblock %}

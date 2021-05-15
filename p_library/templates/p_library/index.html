@@ -1,37 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-Добро пожаловать в {{ title }}. <br>
-Тут собрано {{ books_count }} книг из моей личной коллекции.
-
-<table border="1">
-    {% for book in books %}
-        <tr>
-            <td>{{ book.title }}</td>
-            <td>{{ book.ISBN }}</td>
-            <td>{{ book.description }}</td>
-            <td>{{ book.year_release }}</td>
-            <td>{{ book.author.full_name }}</td>
-            <td>{{ book.author.country }}</td>
-            <td>{{ book.copy_count }}</td>
-            <td>
-                <form action="/index/book_increments/" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input type="hidden" name="id" value="{{book.id}}" />
-                    <input type="submit" value="Увеличить кол-во" />
-                </form>
-                <form action="/index/book_decrements/" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input type="hidden" name="id" value="{{book.id}}" />
-                    <input type="submit" value="Уменьшить кол-во" />
-                </form>
-            </td>
-        </tr>
-    {% endfor %}
-</table>
-</body>
-</html>
+{% extends 'p_library/base.html' %}
+    {% block title %}<h1>Добро пожаловать в {{ title }}.</h1>{% endblock %}
+        {% block header %}<h2>Тут собрано {{ books|length }} книг из моей личной коллекции.</h2>{% endblock %}
+{% block content %}
+    <div class="table">
+        <table border="1">
+            {% for book in books %}
+                <tr>
+                    <td>
+                        <img height="200" width="200"
+                        src="{{ book.photo.url }}" alt="" class="fit">
+                    </td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.ISBN }}</td>
+                    <td>{{ book.description }}</td>
+                    <td>{{ book.year_release }}</td>
+                    <td>{{ book.author.full_name }}</td>
+                    <td>{{ book.author.country }}</td>
+                    <td>{{ book.copy_count }}</td>
+                    <td>
+                        <form action="/index/book_increments/" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="input">
+                                <input type="hidden" name="id" value="{{book.id}}" />
+                                <input type="submit" value="Увеличить кол-во" />
+                            </div>
+                        </form>
+                        <form action="/index/book_decrements/" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{book.id}}" />
+                            <input type="submit" value="Уменьшить кол-во" />
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

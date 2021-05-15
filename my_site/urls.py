@@ -16,11 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from p_library import views
-
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+from django.views.generic.base import TemplateView
+from p_library.urls import urlpatterns as p_library_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('p_library.urls')),
-    path('index/', views.index),
+    path('', views.index),
     #path('', views.books_list),
     path('friends/book_increment/', views.book_increment),
     path('index/book_increments/', views.book_increments),
@@ -28,3 +32,6 @@ urlpatterns = [
     path('redactions/', views.redactions),
     path('friends/', views.friends)
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += p_library_urls

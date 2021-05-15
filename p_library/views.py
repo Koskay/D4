@@ -157,3 +157,17 @@ class FriendEdit(CreateView):
 class FriendList(ListView):
     model = Friend
     template_name = 'friend_list.html'
+
+class BookList(ListView):
+    model = Book
+    template_name = 'book_list.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        get_params = self.request.GET.dict()
+
+        # search
+        if get_params.get('q'):
+            qs = qs.filter(name__icontains=get_params.get('q'))
+
+        return qs

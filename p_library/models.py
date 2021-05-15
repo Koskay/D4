@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 # Create your models here.
 class Author(models.Model):
     full_name = models.TextField()
@@ -20,6 +20,7 @@ class Book(models.Model):
                                 related_name="book_house")
     copy_count = models.SmallIntegerField()
     price = models.DecimalField(max_digits=12, decimal_places=2)
+    photo = models.ImageField(upload_to='photo', blank=True, null=True)
 
     def __str__(self):
         return self.title

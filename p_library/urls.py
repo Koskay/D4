@@ -2,7 +2,7 @@ from django.urls import path
 from p_library.views import index
 from django.contrib import admin
 from django.urls import path
-from .views import AuthorEdit, AuthorList, author_create_many, books_authors_create_many, FriendEdit, FriendList
+from .views import AuthorEdit, AuthorList, author_create_many, books_authors_create_many, FriendEdit, FriendList, BookList
 
 app_name = 'p_library'
 urlpatterns = [
@@ -13,4 +13,5 @@ urlpatterns = [
     path('author_book/create_many', books_authors_create_many, name='author_book_create_many'),
     path('friend/create', FriendEdit.as_view(), name = 'friends_create'),
     path('friends', FriendList.as_view(), name='friend_list'),
+    path('books', BookList.as_view())
 ]
