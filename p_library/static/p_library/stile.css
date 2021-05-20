@@ -44,12 +44,28 @@ td:nth-child(2){
     text-align: left;
 }
 
+
 input {
     background-color: #f29538;
+    weight: 100px;
 }
 
 
 .list-group-item {
     background-color: #F5D7BF;
+}
+
+.nav-line {
+    color: #e6eb52;
+    font-weight: bold;
+    font-size: 20px;
+    padding-right: 15px;
+    text-decoration: none;
+}
+
+.forms {
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
 }
 

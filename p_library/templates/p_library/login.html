@@ -1,0 +1,12 @@
+{% extends 'p_library/base.html' %}
+{% block content %}
+    <h1>Авторизация</h1>
+<form method="post" class="forms">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input class="inputs" type="submit" value="Вход">
+</form>
+{% load socialaccount %}
+Либо авторизируйтесь через:
+<a href="{% provider_login_url 'github' method='oauth2' %}">GitHub</a>
+{% endblock %}

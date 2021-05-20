@@ -1,27 +1,46 @@
 from django.shortcuts import render
-from p_library.models import Book
+from .models import Book
 from django.template import loader
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from p_library.models import Redaction
-from p_library.models import Author
-from p_library.forms import AuthorForm, BookForm, FriendForm
+from .models import Redaction
+from .models import Author, Friend
+from .forms import AuthorForm, BookForm, FriendForm, UserRegisterForm, UserLoginForm
 from django.views.generic import CreateView, ListView
 from django.urls import reverse_lazy
 from django.forms import formset_factory
 from django.http.response import HttpResponseRedirect
-from p_library.models import Friend
-
-# Create your views here.
-#def index(request):
-    #author = Author.objects.all()
-    #return render(request, 'index.html', context={'author':author})
-
-#def index(request):
-    #books = Book.objects.all()
-    #return render(request, 'index.html', context={'books':books})
+from django.contrib import messages
+from django.contrib.auth import login, logout
 
 
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Вы успешно зарегистрировались!')
+            return redirect('login')
+        else:
+            messages.error(request, 'Ошибка регистрации!')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'p_library/register.html', {'form': form})
+
+def login_user(request):
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserLoginForm()
+    return render(request, 'p_library/login.html', {'form': form})
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
 def index(request):
     template = loader.get_template('index.html')

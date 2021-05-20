@@ -1,0 +1,9 @@
+{% extends 'p_library/base.html' %}
+{% block content %}
+    <h1>Регистрация</h1>
+<form method="post" class="forms">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input class="inputs" type="submit" value="Зарегистрироваться">
+</form>
+{% endblock %}
