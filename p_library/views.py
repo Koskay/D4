@@ -12,7 +12,8 @@ from django.forms import formset_factory
 from django.http.response import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
-
+from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth.models import User
 
 def register(request):
     if request.method == 'POST':
@@ -26,6 +27,18 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'p_library/register.html', {'form': form})
+
+def logs(request):
+    context = {}
+    if request.user.is_authenticated:
+        context['username'] = request.user.username
+        try:
+            context['github_url'] = SocialAccount.objects.get(provider='github',
+                                                              user=request.user).extra_data['html_url']
+            context['login'] = SocialAccount.objects.get(provider='github', user=request.user).extra_data['login']
+        except SocialAccount.DoesNotExist:
+            context['age'] = User.objects.get(user=request.user).age
+    return render(request, 'index.html', context)
 
 def login_user(request):
     if request.method == 'POST':
@@ -50,6 +63,7 @@ def index(request):
         "books": books,
     }
     return HttpResponse(template.render(biblio_data, request))
+
 
 def book_increment(request):
     if request.method == 'POST':
